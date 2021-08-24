@@ -1,0 +1,33 @@
+body{
+    background: cyan;
+}
+h1{
+    color: tomato;
+    text-decoration: yellow;
+    text-align: center;
+    border-style: double;
+    border-color: rgb(251, 255, 3);
+    background-color: black;
+}
+h2{
+    color: saddlebrown;
+    text-align: right;
+    background-color: wheat;
+    border-style: dotted;
+    border-color: honeydew;
+}
+h3{
+    text-decoration: line-through;
+    background-color: mediumpurple;
+    border: 5px solid red;
+    border-radius: 8px;
+
+    
+}
+button{
+    background-color: rgb(241, 182, 18);
+}
+input{
+    background-color: khaki;
+    width: 20%;
+}
