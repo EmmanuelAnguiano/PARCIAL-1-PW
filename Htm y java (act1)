@@ -1,0 +1,62 @@
+<html>
+    <head><link rel="stylesheet" href="css/mystyle.css"></head><br>
+    <h1>PRACTICA 1</h1>
+    <body>
+        <form>
+          <p>X:  <input type="number" id="x" placeholder="ingresa un valor" value="0"></p>
+        </form>
+
+        <form>
+          <p>Y: <input type="number" id="y" placeholder="ingresa un valor" value="0"></p>
+        </form>
+        <form>
+          <button id="btnag">AGREGAR</button><br><br>
+          <button id="btndis">DISTANCIA</button>
+        </form>
+          <div id="res"></div>
+        
+        <script>
+            class Punto{
+    constructor(x,y){
+      this.x=x;
+      this.y=y;
+    }
+    info(){
+      return "(" + this.x + "," + this.y + ")"
+    }
+    distancia(pdos){
+      let d;
+      d=Math.pow(this.x-pdos.x,2)+(this.y-pdos.y)*(this.y-pdos.y);
+      return Math.sqrt(d);
+    }
+  }
+  class Ruta{
+    constructor(){
+      this.puntos=new Array();
+    }
+    agregar(punto){
+      document.getElementById('btnag');
+      this.puntos.push(punto);
+    }
+    distancia(){
+      document.getElementById('btndis');
+      let dtotal=0;
+  	  for (let i=0;i<this.puntos.length-1;i++)
+        dtotal+=this.puntos[i].distancia(this.puntos[i+1]);
+      return dtotal;
+    }
+  }
+/*
+  let po;
+  let pd;
+  let miruta=new Ruta();
+  miruta.agregar(po)
+  miruta.agregar(pd)
+  miruta.agregar(new Punto(5,6))
+  */
+        </script>
+
+        <h2>Carlos Emmanuel Anguiano Pedraza</h2>
+        <h3>Programacion Web</h3>
+    </body>
+</html>
