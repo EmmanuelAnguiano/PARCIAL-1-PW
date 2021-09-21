@@ -1,0 +1,219 @@
+<html>
+  <style>
+    body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+  }
+    .estilo1{
+        width:80%;
+      border:0.3em solid red;
+      padding:3px;
+      margin:5px;
+    }
+    span{
+        font-size:2em
+    }
+    .alerta{
+        background: cyan;
+      text-shadow: 2px 2px yellow;
+    }
+    .compa{
+        color: red;
+        font-size: 25px;
+    }
+    .texto1{
+        color: darkblue;
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .btna{
+        background-color: darkkhaki;
+        color: royalblue;
+        width: 100px;
+        height: 60px;
+    }
+    .btnlis{
+        background-color: blue;
+        color: rgb(255, 230, 0);
+        width: 100px;
+        height: 60px;
+    }
+    .btncon{
+        background-color: wheat;
+        color: black;
+        width: 100px;
+        height: 60px;
+    }
+    .btnr{
+        background-color: black;
+        color: red;
+        width: 100px;
+        height: 60px;
+    }
+    .texto2{
+        color: rgb(2, 141, 111);
+    }
+  </style>
+    <head></head>
+    <body>
+            <h1>Inventario de Usuarios</h1>
+            <div id='container'>
+              <div id='app'>
+                <form id='frmProductos'>
+                  <label for='txtid' class="texto1">ID:
+                    <input type='text' id='txtid'>
+                  </label><br>
+                  <label for='txtuser' class="texto1">USARNAME:
+                    <input type='text' id='txtuser'>
+                  </label><br>  
+                  <label for='txtemail' class="texto1">EMAIL:
+                    <input type='text' id='txtemail'>
+                  </label><br>      
+                  <label for='txtph' class="texto1">PHONE:
+                    <input type='number' id='txtph'>
+                  </label><br>    
+                  <label for='txtweb' class="texto1">WEBSITE:
+                    <input type='text' id='txtweb'>
+                  </label><br>  
+                  <p class="compa">COMPANY</p>
+                  <label for='txtstreet' class="texto1">STREET:
+                    <input type='text' id='txtstreet'>
+                  </label><br>  
+                  <label for='txtcity' class="texto1">CITY:
+                    <input type='text' id='txtcity'>
+                  </label><br>  
+                  <label for='txtzip' class="texto1">ZIPCODE:
+                    <input type='number' id='txtzip'>
+                  </label><br>  
+                  <button type='button' id='btnAdd' class="btna">Agregar</button>
+                  <button type='reset' id='btnReset' class="btnr">Cancelar</button>
+                  <button type="button" id="btnlis" class="btnlis">LISTAR</button>
+                  <button type="button" id="btncon" class="btncon">CONSULTAS</button>
+
+
+                  <div>
+                    <label for='mnuProds'>Productos
+                      <select id='mnuProds'>
+                              </select>
+                    </label>
+                </div>
+              
+
+                </form>
+                <div id='productos'></div>
+              </div>
+            </div>
+            <script src="js/usuarios.js"></script>
+    </body>
+    <script>
+      class Producto{
+    constructor(id,user,email,ph,webs,street,city,zipc){
+      this.id=id;
+      this.user=user;
+      this.email=email;
+      this.ph=ph;
+      this.webs=webs;
+      this.street=street;
+      this.city=city;
+      this.zipc=zipc;
+    }
+  }
+  class Inventario{
+    constructor(){
+        this.datos=new Map();
+    }
+    agregar(producto){
+      this.datos.set(producto.id,producto);
+      console.log(this.datos.get(producto.id));
+      return true;
+    }  
+  }
+  
+  
+  class UI{
+    addProducto(nuevo){
+      const listado=document.getElementById('productos');
+      const producto=document.createElement('div');
+      producto.innerHTML=`
+                <div class ='estilo1' id='cod${nuevo.id}'>
+                    <div>
+                        <h2>ID: ${nuevo.id}</h2>
+                        <p class='texto2'>Usarname: ${nuevo.user}</p>
+                        <p class='texto2'>Email $ ${nuevo.email}</p>
+                        <p class='texto2'>Phone: ${nuevo.ph}</p>
+                        <p class='texto2'>Website: ${nuevo.webs}</p>
+                        <h1 class='compa'>Company</h1>
+                        <p class='texto2'>Street: ${nuevo.street}</p>
+                        <p class='texto2'>City: ${nuevo.city}</p>
+                        <p class='texto2'>Zipcode: ${nuevo.zipc}</p>
+                    </div>
+                </div>
+            `;
+      listado.appendChild(producto);
+    }
+    showMessage(mensaje,tipo){
+      const container=document.getElementById('container');
+      const app=document.getElementById('app');
+      
+      const div=document.createElement('div');
+      div.className=`alerta`;
+      div.appendChild(document.createTextNode(mensaje))
+      
+      container.insertBefore(div,app);
+      
+      setTimeout(function(){
+        document.querySelector('.alerta').remove();
+      },3000);
+    }
+  }
+  
+  
+  let inventario=new Inventario();
+  let interfaz = new UI();
+  const btnlis=document.getElementById('btnlis');
+  btnlis.addEventListener('click',()=>{
+    let id=document.getElementById('txtid').value;
+    let user=document.getElementById('txtuser').value;
+    let email=document.getElementById('txtemail').value;
+    let webs=document.getElementById('txtweb').value;
+    let street=document.getElementById('txtstreet').value;
+    let city=document.getElementById('txtcity').value;
+    let zipc=document.getElementById('txtzip').value;
+    let ph=document.getElementById('txtph').value;
+    let nuevo=new Producto(id,user,email,ph,webs,street,city,zipc);
+    inventario.agregar(nuevo);
+    interfaz.addProducto(nuevo);
+  });
+
+  const btnAdd=document.getElementById('btnAdd');
+  btnAdd.addEventListener('click',()=>{
+    interfaz.showMessage('Se agrego con exito el producto',1);
+  })
+
+
+
+ 
+  const btnCarga=document.getElementById('btncon');
+  btnCarga.addEventListener('click',()=>{
+      let mnuProds=document.getElementById('mnuProds');
+    //for por cada producto que tenemos
+    for(i=1; i<=Producto; i++){
+    mnuProds.innerHTML=`
+            <option value='1'>Usuario: </option>
+            <option value='2'>Usuario:</option>
+            <option value='3'>Usuario:</option>
+            `;
+    }
+  });
+  
+  const mnuProds=document.getElementById('mnuProds');
+  mnuProds.addEventListener('change',()=>{
+        //  	console.log('click en productos');/
+    let producto=document.getElementById('mnuProds');
+    console.log(producto.value);
+    let prod= inventario.buscar(producto.value);
+    console.log(prod)
+    if (prod != null)
+      interfaz.addProducto(prod);
+  });
+    </script>
+</html>
