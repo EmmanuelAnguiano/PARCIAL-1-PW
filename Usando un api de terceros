@@ -1,0 +1,53 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>TEMPERATURA</h1>
+    <h3>Consumiendo una API</h3>
+    <div id="clima"></div>
+    <p>COORDENADAS:</p>
+    LATITUD<input type="text" id="txtlat">
+    LONGITUD <input type="text" id="txtlon">
+    <button id="btncoor">ACEPTAR</button>
+    <div id="res"></div>
+    <script src="js/ubi.js"></script>
+</body>
+</html>
+
+
+JS
+let request = new XMLHttpRequest();
+//request.open('get','http://api.weatherstack.com/current?access_key=dbb98778714737a076ec90c0e713d99d&query=Colima');
+request.onload=function(){ 
+    let data=JSON.parse(this.response);
+    
+   
+    let btncoor=document.getElementById('btncoor');
+    btncoor.addEventListener('click',()=>{
+        let txtlat=document.getElementById('txtlat').value;
+        let txtlon=document.getElementById('txtlon').value;
+        let res=document.getElementById('res');
+        res.innerHTML=`
+        <p>latitud: ${data.location.lat}</p>
+        <p>longitud: ${data.location.lon}</p>
+        <p>clima: ${data.current.temperature}</p>
+        
+        `
+        console.log(data.location.name);
+    });
+}
+
+
+//request.open('get','https://maps.locationiq.com/#zoom=12&lat=19.2516&lon=-103.7256&style=Streets5324589d13e4a59e8724a7829c2107ae');
+
+request.open('get', 'https://us1.locationiq.com/v1/reverse.php?key=5324589d13e4a59e8724a7829c2107ae&lat=' + txtlat + '&lon=' + txtlon + '&format=json');
+request.open('get','http://api.weatherstack.com/current?access_key=dbb98778714737a076ec90c0e713d99d&query=Colima');
+
+
+request.send();
