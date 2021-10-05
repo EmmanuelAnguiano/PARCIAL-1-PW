@@ -39,7 +39,6 @@ request.onload=function(){
         <p>clima: ${data.current.temperature}</p>
         
         `
-        console.log(data.location.name);
     });
 }
 
