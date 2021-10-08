@@ -1,0 +1,74 @@
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btnusers">CARGAR USUARIOS</button>
+    <div id="usuarios"></div>
+
+    <label for="">USUARIOS</label>
+
+<select name="usu" id="usu">
+</select>
+<div id="posts"></div>
+<button id="btncom">CARGAR COMENTARIOS</button>
+<div id="coments"></div>
+
+    <script src="js/jsonplaceholder.js"></script>
+</body>
+</html>
+
+JS
+let btnusers=document.getElementById('btnusers');
+  btnusers.addEventListener('click',()=>{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then((response) => response.json())
+    .then((json) => {
+        let usuarios=document.getElementById('usuarios');
+        let usu=document.getElementById('usu');
+        console.log(json);
+        let lista="";
+        for(let i=0;i<json.length;i++)
+            lista+="<option value='"+ json[i].id +"'>" + json[i].name + "</option>"
+        usu.innerHTML=lista;
+
+    });
+  })
+
+
+  let usu=document.getElementById('usu');
+  usu.addEventListener('change',()=>{
+      let userId=document.getElementById('usu').value;
+    fetch('https://jsonplaceholder.typicode.com/posts?userId=' + userId)
+    .then((response) => response.json())
+    .then((json) => {
+        let posts=document.getElementById('posts');
+        //falta un div para h3 y parrafo y otro div para el id de id de posts
+        let lista="";
+        for(let i=0; i<json.length; i++){
+        lista+="<h3 value='" + json[i].id + "'>" + json[i].title + "</h3>"
+          lista+="<p value='" + json[i].id + "'>" + json[i].body + "</p>"
+        }
+        posts.innerHTML=lista;
+    });
+  } )
+
+
+  let btncom=document.getElementById('btncom');
+  btncom.addEventListener('click',()=>{
+    let postId=document.getElementById('usu').value;
+    fetch('https://jsonplaceholder.typicode.com/comments?postId=' + postId)
+    .then((response)=> response.json())
+    .then((json)=>{
+      let coments=document.getElementById('coments');
+      let lista="";
+      for(let i=0; i<json.length; i++)
+          lista+="<p value='" + json[i].id + "'>" + json[i].id  + " " + json[i].body + "</p>"
+          coments.innerHTML=lista;
+    });
+  })
